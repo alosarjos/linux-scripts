@@ -1,0 +1,47 @@
+#!/bin/sh
+
+meson setup _build \
+       -D c_args="-march=native -O3"  \
+       -D c_link_args="-march=native -O3" \
+       -D cpp_args="-march=native -O3" \
+       -D cpp_link_args="-march=native -O3" \
+       -D b_ndebug=true \
+       -D b_lto=true \
+       -D buildtype=plain \
+       --wrap-mode=nofallback \
+       -D prefix="${PWD}/build/install/usr" \
+       -D sysconfdir="${PWD}/build/install/etc"\
+       -D platforms=x11,wayland \
+       -D dri-drivers=  \
+       -D gallium-drivers=radeonsi \
+       -D vulkan-drivers=amd \
+       -D dri3=enabled \
+       -D egl=enabled \
+       -D gallium-extra-hud=true \
+       -D gallium-nine=true \
+       -D gallium-omx=bellagio \
+       -D gallium-va=enabled \
+       -D gallium-vdpau=enabled \
+       -D gallium-xa=disabled \
+       -D gallium-xvmc=disabled \
+       -D gbm=enabled \
+       -D gles1=disabled \
+       -D gles2=enabled \
+       -D glvnd=true \
+       -D glx=dri \
+       -D libunwind=enabled \
+       -D llvm=enabled \
+       -D lmsensors=enabled \
+       -D osmesa=false \
+       -D shared-glapi=enabled \
+       -D gallium-opencl=icd \
+       -D valgrind=disabled \
+       -D vulkan-overlay-layer=true \
+       -D vulkan-device-select-layer=true \
+       -D zstd=enabled \
+       -D microsoft-clc=disabled
+
+
+ninja -C _build
+
+ninja -C _build install
